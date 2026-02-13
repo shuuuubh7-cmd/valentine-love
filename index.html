@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Dewanshi ❤️</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:"Segoe UI",sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee") center/cover;
+}
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+}
+.container{
+  position:relative;
+  z-index:2;
+  color:white;
+  max-width:700px;
+  padding:20px;
+}
+h1,h2{
+  text-shadow:0 0 10px #ff4d6d;
+}
+button{
+  background:#ff4d6d;
+  color:white;
+  font-size:20px;
+  padding:14px 32px;
+  border:none;
+  border-radius:40px;
+  margin:10px;
+  cursor:pointer;
+  box-shadow:0 0 15px #ff4d6d;
+}
+#message{
+  margin-top:25px;
+  font-size:20px;
+  line-height:1.6;
+}
+
+/* hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:22px;
+  animation:float 5s linear infinite;
+}
+@keyframes float{
+  to{transform:translateY(-110vh);opacity:0;}
+}
+
+/* moving no */
+#movingNo{
+  position:absolute;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>💖 Answer honestly 💖</h1>
+  <div id="question"></div>
+  <div id="buttons"></div>
+  <div id="message"></div>
+</div>
+
+<!-- silent embedded audio -->
+<audio id="music">
+  <source src="data:audio/mpeg;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAwCAf///wAA" type="audio/mpeg">
+</audio>
+
+<script>
+const qBox = document.getElementById("question");
+const btnBox = document.getElementById("buttons");
+const msg = document.getElementById("message");
+const music = document.getElementById("music");
+
+let step = 0;
+
+function render(){
+  msg.innerHTML = "";
+  btnBox.innerHTML = "";
+
+  if(step === 0){
+    qBox.innerHTML = "<h2>Do you like surprises?</h2>";
+    addBtn("Yes",next);
+    addBtn("No",next);
+  }
+  else if(step === 1){
+    qBox.innerHTML = "<h2>Chocolates or flowers?</h2>";
+    addBtn("Chocolates",next);
+    addBtn("Flowers",next);
+  }
+  else if(step === 2){
+    qBox.innerHTML = "<h2>Do you love me?</h2>";
+    addBtn("Yes",next);
+
+    const no = document.createElement("button");
+    no.innerText = "No";
+    no.id = "movingNo";
+    no.onmouseover = moveNo;
+    btnBox.appendChild(no);
+  }
+  else if(step === 3){
+    qBox.innerHTML = "<h2>Will you be my Valentine? 💘</h2>";
+    addBtn("Yes",showNote);
+    addBtn("No",()=> {
+      msg.innerHTML = "🥺 Please give me one chance, I really love you ❤️";
+    });
+  }
+}
+
+function addBtn(text,fn){
+  const b = document.createElement("button");
+  b.innerText = text;
+  b.onclick = fn;
+  btnBox.appendChild(b);
+}
+
+function next(){
+  step++;
+  render();
+}
+
+function moveNo(){
+  msg.innerHTML = "🥺 Please give me one more chance, I really love you ❤️";
+  const b = document.getElementById("movingNo");
+  b.style.left = Math.random()*80 + "%";
+  b.style.top = Math.random()*60 + "%";
+}
+
+function showNote(){
+  music.play();
+  qBox.innerHTML = "";
+  btnBox.innerHTML = "";
+  msg.innerHTML =
+    "💖💖💖<br><br>" +
+    "Hey Dewanshi ❤️<br><br>" +
+    "I notice the little things — your silence, your smile, your moods.<br>" +
+    "I genuinely care about you and your happiness.<br><br>" +
+    "I promise to respect you, support you, and stand by you always.<br>" +
+    "Thank you for choosing me today and every day 🌹<br><br>" +
+    "<b>Happy Valentine’s Day 💕</b><br>— Shubh";
+}
+
+/* floating hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤️";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+},250);
+
+render();
+</script>
+
+</body>
+</html>
